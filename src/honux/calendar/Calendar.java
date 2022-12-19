@@ -23,23 +23,37 @@ public class Calendar {
 			return MAX_DAYS[month - 1];			
 		}
 	}
-	public int get_Days(String day) {
-		 if(day.equals("SU")) {return 0;} 
-		 else if(day.equals("MO")) {return 1;}
-		 else if(day.equals("TU")) {return 2;}
-		 else if(day.equals("WE")) {return 3;}
-		 else if(day.equals("TH")) {return 4;}
-		 else if(day.equals("FR")) {return 5;}
-		 else if(day.equals("SA")) {return 6;}
-		 else {return 0;}
+	public int getWeekday(int year, int month, int day) {
+		int syear = 1970;
+		final int STANDARD_WEEKDAY = 4; // 1970/Jan/1st = Thursday
+		
+		int count = 0;
+		
+		for(int i = syear; i < year; i++) {
+			int delta = isLeapYear(i) ? 366 : 365;
+			count += delta;
+		}
+		
+		for(int i = 1; i < month; i++) {
+			int delta = getMaxDaysOfMonth(year, i);
+			count += delta;
+		}
+		
+		count += day - 1;
+		
+		int weekday = (count + STANDARD_WEEKDAY) % 7;
+		return weekday;
+			
 	}
-	public void printCalendar(int year, int month, String weekday) {
-		System.out.printf("    <<%4d년 %3d월>>\n", year, month);
+	public void printCalendar(int year, int month) {
+		System.out.printf("    <<%d년 %d월>>\n", year, month);
 		System.out.println(" SU MO TU WE TH FR SA");
 		System.out.println("---------------------");
 		
+		//get_Weekday auto
+		int day = getWeekday(year, month, 1);
+		
 		int maxDay = getMaxDaysOfMonth(year, month);
-		int day = get_Days(weekday);
 		int count = 7 - day;
 		int delim = count < 7 ? count : 0; 
 		
