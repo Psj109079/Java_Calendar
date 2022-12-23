@@ -20,15 +20,27 @@ public class Prompt {
 		
 		
 		printMenu();
-		while (true) {
+		boolean isLoop = true; 
+		while (isLoop) {
 			System.out.println("¸í·É (1, 2, 3, h, q)");
 			String cmd = sc.next();
-			if(cmd.equals("1")) {cmdRegister(sc, cal);} 
-			else if(cmd.equals("2")) {cmdSearch(sc, cal);} 
-			else if(cmd.equals("3")) {cmdCal(sc, cal);}
-			else if(cmd.equals("h")) {printMenu();}
-			else if(cmd.equals("q")) {break;}
-			
+			switch(cmd) {
+			case "1" :
+				cmdRegister(sc, cal);
+				break;
+			case "2" :
+				cmdSearch(sc, cal);
+				break;
+			case "3" :
+				cmdCal(sc, cal);
+				break;
+			case "h" :
+				printMenu();
+				break;
+			case "q" :
+				isLoop = false;
+				break;
+			}
 		}
 
 		System.out.println("Thank you. Bye~");
